@@ -1,2 +1,2 @@
 #### How to play
-php game.php
+php console.php app:game
