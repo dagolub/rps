@@ -1,4 +1,5 @@
 <?php
+
 namespace App;
 
 use App\Player;
@@ -12,26 +13,28 @@ class Game
 
     public function __construct()
     {
-
     }
 
-    public function firstWinner($one_result, $two_result)
+    public function firstWinner(string $one_result, string $two_result): bool
     {
         $win_index = (string) array_search($one_result, $this->choices) . array_search($two_result, $this->choices);
-        if ( in_array($win_index, ['21', '10', '02']) ) {
+        if (in_array($win_index, ['21', '10', '02'])) {
             return true;
         }
         return false;
     }
 
-    public function addPlayers(Player $one, Player $two) {
+    public function addPlayers(Player $one, Player $two): Game
+    {
         $this->one = $one;
         $this->score[$one->getName()] = 0;
         $this->two = $two;
         $this->score[$two->getName()] = 0;
+
+        return $this;
     }
 
-    public function play()
+    public function play(): Game
     {
         foreach (range(1, 100) as $n) {
             $one_result = $this->one->makeChoice($this->choices);
@@ -43,6 +46,8 @@ class Game
                 $this->score[$winner->getName()]++;
             }
         }
+
+        return $this;
     }
 
     public function showScore()

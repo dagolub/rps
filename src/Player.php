@@ -1,4 +1,5 @@
 <?php
+
 namespace App;
 
 class Player
@@ -7,7 +8,6 @@ class Player
 
     public function __construct()
     {
-
     }
 
     public function setName(string $name)
@@ -23,7 +23,6 @@ class Player
 
     public function makeChoice($choices)
     {
-        return $choices[rand(0,count($choices)-1)];
+        return $choices[rand(0, count($choices)-1)];
     }
-
 }

@@ -19,14 +19,8 @@ class GameCommand extends Command
 
     protected function configure()
     {
-        $this
-            // the short description shown while running "php bin/console list"
-            ->setDescription('Star new game.')
-
-            // the full command description shown when running the command with
-            // the "--help" option
-            ->setHelp('The game is played automatically by default 100 games')
-        ;
+        $this->setDescription('Star new game.')
+             ->setHelp('The game is played automatically by default 100 games');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -34,10 +28,7 @@ class GameCommand extends Command
         $mike = (new Player())->setName('Mike');
         $gorge = (new Player())->setName('Gorge');
 
-        $game = new Game();
-        $game->addPlayers($mike, $gorge);
-        $game->play();
-        $game->showScore();
+        (new Game())->addPlayers($mike, $gorge)->play()->showScore();
 
         return 0;
     }
