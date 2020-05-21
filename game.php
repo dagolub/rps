@@ -1,5 +1,6 @@
 <?php
 
+
 abstract class Player
 {
     private string $name = "no name";
@@ -32,6 +33,15 @@ class Player2 extends Player
 {
 }
 
+function isWin($result1, $result2) {
+    $result = $result1 .$result2;
+    $wins = ['scissorspaper', 'paperrock', 'rockscissors'];
+    if ( in_array($result, $wins)) {
+        return true;
+    }
+    return false;
+}
+
 $player1 = new Player1();
 $player1->setName('Mike');
 $player2 = new Player2();
@@ -49,7 +59,7 @@ for ($i =0; $i <100; $i++) {
         $score['draw']++;
         //echo "draw";
     } else {
-        $winner = strlen($result1) > strlen($result2) ? $player1 : $player2;
+        $winner = isWin($result1, $result2) ? $player1 : $player2;
         $score[$winner->getName()]++;
         //echo $winner->getName();
     }
