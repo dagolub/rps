@@ -4,13 +4,14 @@ namespace App\Command;
 
 use App\Game;
 use App\Player;
+use App\Randomize;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class GameCommand extends Command
 {
-    protected static $defaultName = 'app:game';
+    protected static  $defaultName = 'app:game';
 
     public function __construct($name = null)
     {
@@ -25,10 +26,13 @@ class GameCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $mike = (new Player())->setName('Mike');
-        $gorge = (new Player())->setName('Gorge');
+        $randomizer = new Randomize();
+        $mike = (new Player($randomizer))->setName('Mike');
+        $gorge = (new Player($randomizer))->setName('Gorge');
 
-        (new Game())->addPlayers($mike, $gorge)->play()->showScore();
+        $game = (new Game())->addPlayers($mike, $gorge)->play();
+
+        $output->writeln($game->getScore());
 
         return 0;
     }

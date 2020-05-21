@@ -2,47 +2,46 @@
 
 namespace App;
 
-use App\Player;
-
 class Game
 {
     private Player $one;
     private Player $two;
-    private array $score = ['draw'=>0];
+    private array $score;
     private array $choices = ['rock','paper','scissors'];
 
     public function __construct()
     {
     }
 
-    public function firstWinner(string $one_result, string $two_result): bool
+    public function isTheFirstWinner(string $one_result, string $two_result): bool
     {
         $win_index = (string) array_search($one_result, $this->choices) . array_search($two_result, $this->choices);
-        if (in_array($win_index, ['21', '10', '02'])) {
-            return true;
-        }
-        return false;
+
+        return in_array($win_index, ['21', '10', '02']);
     }
 
     public function addPlayers(Player $one, Player $two): Game
     {
         $this->one = $one;
-        $this->score[$one->getName()] = 0;
         $this->two = $two;
+
+        $this->score[$one->getName()] = 0;
         $this->score[$two->getName()] = 0;
+        $this->score['draw'] = 0;
 
         return $this;
     }
 
-    public function play(): Game
+    public function play($number_of_games = 100): Game
     {
-        foreach (range(1, 100) as $n) {
+        foreach (range(1, $number_of_games) as $n) {
             $one_result = $this->one->makeChoice($this->choices);
             $two_result = $this->two->makeChoice($this->choices);
-            if ($one_result === $two_result) {
+
+            if ( $one_result === $two_result ) {
                 $this->score['draw']++;
             } else {
-                $winner = $this->firstWinner($one_result, $two_result) ? $this->one : $this->two;
+                $winner = $this->isTheFirstWinner($one_result, $two_result) ? $this->one : $this->two;
                 $this->score[$winner->getName()]++;
             }
         }
@@ -50,8 +49,13 @@ class Game
         return $this;
     }
 
-    public function showScore()
+    public function getScore()
     {
-        print_r($this->score);
+        $result = [];
+        foreach ($this->score as $k => $v)
+        {
+            $result[] = $k . ": " . $v;
+        }
+        return $result;
     }
 }
