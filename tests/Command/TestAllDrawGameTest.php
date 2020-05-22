@@ -5,6 +5,7 @@ use App\Player;
 use PHPUnit\Framework\TestCase;
 use App\RandomizeInterface;
 
+// тесты, которые тестируют 1 класс обычно складывают в 1 файл и тесты методами пишут. у тебя 3 теста разбиты в 3 файла.
 class TestAllDrawGameTest   extends TestCase
 {
     public function testExecute()

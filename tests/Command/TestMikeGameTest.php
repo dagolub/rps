@@ -5,6 +5,7 @@ use App\Player;
 use App\RandomizeInterface;
 use PHPUnit\Framework\TestCase;
 
+// наименования тестов ни о чем не говорит. что значит MikeGame не понятно
 class TestMikeGameTest   extends TestCase
 {
     public function testExecute()
@@ -19,6 +20,7 @@ class TestMikeGameTest   extends TestCase
         $alwaysScissors = new class implements RandomizeInterface {
             public function getRandomNumber(int $to_number): int
             {
+                // 4spaces нужны не везде
                 return 2    ;
             }
         };

@@ -17,6 +17,7 @@ class GameCommand extends Command
 
     public function __construct($name = null)
     {
+        // этот конструктор лишний. он ничего не делает
         parent::__construct($name);
     }
 
@@ -36,10 +37,12 @@ class GameCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $randomizer = new Randomize();
+        // 2 игрока играют одинаково. в условии было 1 рандом, второй всегда бумага
         $mike = (new Player($randomizer))->setName('Mike');
         $gorge = (new Player($randomizer))->setName('Gorge');
 
         $game = (new Game())->addPlayers($mike, $gorge)
+        // инпут нужно как-то нормализировать. сюда может прилететь любая строка. или -100
         ->play($input->getOption('number-games'));
 
         $io = new SymfonyStyle($input, $output);

@@ -4,6 +4,10 @@ namespace App;
 
 class Player
 {
+    /**
+     * если я не вызову setName, то получу ошибку, когда попытаюсь обратиться к name.
+     * нужно определять дефолтное значение, или указывать в конструкторе
+     */
     private string $name;
     private RandomizeInterface $randomizer;
 
@@ -12,6 +16,7 @@ class Player
         $this->randomizer = $randomizer;
     }
 
+    // не забываем return type (public function setName(string $name):self)
     public function setName(string $name)
     {
         $this->name = $name;
