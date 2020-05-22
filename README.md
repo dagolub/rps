@@ -3,6 +3,10 @@
 docker pull dagolub/rps
 docker run -it --rm dagolub/rps
 ```
+If you want choose number of gemes
+```bash
+docker run -it --rm dagolub/rps php /code/console.php app:game --number-games=5
+```
 
 #### How to debug
 [Read this](https://500.keboola.com/xdebug-for-a-cli-app-in-docker-and-phpstorm-66a939c2c603)
