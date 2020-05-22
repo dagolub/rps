@@ -6,4 +6,4 @@ RUN curl -sS https://getcomposer.org/installer | php
 COPY . /code/
 RUN php /code/composer.phar install
 RUN rm composer.phar
-CMD php /code/console.php app:game
+CMD php /code/vendor/bin/phpunit
