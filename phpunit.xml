@@ -1,0 +1,13 @@
+<!-- phpunit.xml -->
+<phpunit>
+    <!-- ... -->
+    <testsuites>
+        <testsuite name="Project Test Suite">
+            <directory>tests</directory>
+        </testsuite>
+    </testsuites>
+    <!-- ... -->
+    <php>
+        <server name="KERNEL_CLASS" value="App\AppKernel" />
+    </php>
+</phpunit>

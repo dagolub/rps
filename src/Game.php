@@ -54,7 +54,9 @@ class Game
         $result = [];
         foreach ($this->score as $k => $v)
         {
-            $result[] = $k . ": " . $v;
+            #$result[$k] = [$k=>$v];
+            $result[$k] = $v;
+            #print_r($result);
         }
         return $result;
     }

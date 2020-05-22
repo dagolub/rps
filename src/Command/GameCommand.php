@@ -9,6 +9,7 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Style\SymfonyStyle;
 
 class GameCommand extends Command
 {
@@ -41,8 +42,9 @@ class GameCommand extends Command
         $game = (new Game())->addPlayers($mike, $gorge)
         ->play($input->getOption('number-games'));
 
-        $output->writeln($game->getScore());
-
+        $io = new SymfonyStyle($input, $output);
+        $dataToPrint = array_map(function($k, $v) { return [$k=>$v];},array_keys($game->getScore()),$game->getScore());
+        call_user_func_array([$io,'definitionList'], $dataToPrint);
         return 0;
     }
 }
