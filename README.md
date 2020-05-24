@@ -3,9 +3,9 @@
 docker pull dagolub/rps
 docker run -it --rm dagolub/rps
 ```
-If you want choose number of gemes
+If you want choose number of games
 ```bash
-docker run -it --rm dagolub/rps php /code/console.php app:game --number-games=5
+docker run -it --rm dagolub/rps php /code/bin/console.php app:game --number-games=5
 ```
 #### How to test
 ```bash
