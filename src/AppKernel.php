@@ -11,7 +11,6 @@ final class AppKernel extends Kernel
     protected function build(ContainerBuilder $containerBuilder): void
     {
         $containerBuilder->addCompilerPass(new CollectCommands);
-//        $containerBuilder->addCompilerPass(new ;
     }
 
     /**
