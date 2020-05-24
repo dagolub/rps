@@ -2,28 +2,31 @@
 declare(strict_types=1);
 namespace App;
 
+use App\Strategy\StrategyInterface;
+
 class Player
 {
     private string $name;
-    private RandomizeInterface $randomizer;
+    private StrategyInterface $randomizer;
 
-    public function __construct(RandomizeInterface $randomizer)
+    public function __construct(StrategyInterface $randomizer)
     {
         $this->randomizer = $randomizer;
+        $this->name = "no name";
     }
 
-    public function setName(string $name)
+    public function setName(string $name):self
     {
         $this->name = $name;
         return $this;
     }
 
-    public function getName(): string
+    public function getName():string
     {
         return $this->name;
     }
 
-    public function makeChoice($choices)
+    public function makeChoice($choices):string
     {
         $random_index = $this->randomizer->getRandomNumber(count($choices)-1);
         return $choices[$random_index];

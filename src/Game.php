@@ -2,6 +2,7 @@
 declare(strict_types=1);
 namespace App;
 
+
 class Game
 {
     private Player $one;
@@ -9,55 +10,60 @@ class Game
     private array $score;
     private array $choices = ['rock','paper','scissors'];
 
-    public function __construct()
-    {
-    }
-
-    public function isTheFirstWinner(string $one_result, string $two_result): bool
-    {
-        $win_index = (string) array_search($one_result, $this->choices) . array_search($two_result, $this->choices);
-
-        return in_array($win_index, ['21', '10', '02']);
-    }
-
-    public function addPlayers(Player $one, Player $two): Game
+    public function __construct($one, $two)
     {
         $this->one = $one;
         $this->two = $two;
 
-        $this->score[$one->getName()] = 0;
-        $this->score[$two->getName()] = 0;
-        $this->score['draw'] = 0;
-
-        return $this;
+        $this->initScore();
     }
 
-    public function play($number_of_games = 100): Game
+    private function initScore():void
     {
-        foreach (range(1, $number_of_games) as $n) {
+        $this->score[1] = 0;
+        $this->score[2] = 0;
+        $this->score['draw'] = 0;
+    }
+
+    public function isTheFirstWinner(string $one_result, string $two_result): bool
+    {
+        if (
+            $one_result === 'scissors' && $two_result === 'paper' ||
+            $one_result === 'paper' && $two_result === 'rock' ||
+            $one_result === 'rock' && $two_result === 'scissors'
+        ) {
+            return true;
+        }
+        return false;
+    }
+
+    public function play(int $number_of_games = 100): self
+    {
+        $n = 0;
+        while ($n < $number_of_games) {
             $one_result = $this->one->makeChoice($this->choices);
             $two_result = $this->two->makeChoice($this->choices);
 
-            if ( $one_result === $two_result ) {
+            if ($this->isTheFirstWinner($one_result, $two_result)) {
+                $this->score[1]++;
+            } elseif ($one_result === $two_result) {
                 $this->score['draw']++;
             } else {
-                $winner = $this->isTheFirstWinner($one_result, $two_result) ? $this->one : $this->two;
-                $this->score[$winner->getName()]++;
+                $this->score[2]++;
             }
+
+            $n++;
         }
 
         return $this;
     }
 
-    public function getScore()
+    public function getScore(): array
     {
-        $result = [];
-        foreach ($this->score as $k => $v)
-        {
-            #$result[$k] = [$k=>$v];
-            $result[$k] = $v;
-            #print_r($result);
-        }
-        return $result;
+        return [
+            $this->one->getName()=>$this->score[1],
+            $this->two->getName()=>$this->score[2],
+            'draw'=>$this->score['draw']
+        ];
     }
 }

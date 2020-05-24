@@ -1,7 +1,8 @@
 <?php
 
-namespace App;
+namespace App\Strategy;
 
-interface RandomizeInterface {
+interface StrategyInterface
+{
     public function getRandomNumber(int $to_number): int;
 }
