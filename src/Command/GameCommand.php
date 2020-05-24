@@ -13,7 +13,6 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use App\Score;
 use Symfony\Component\Console\Style\SymfonyStyle;
-use Symfony\Component\Validator\Constraints as Assert;
 
 class GameCommand extends Command
 {
@@ -35,7 +34,7 @@ class GameCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        if ( !$number_of_games = $this->getNumberOfGames($input, $output) ) {
+        if (!$number_of_games = $this->getNumberOfGames($input, $output)) {
             return 0;
         }
 
@@ -45,7 +44,7 @@ class GameCommand extends Command
         $gorge = (new Player(new PaperStrategy()))->setName('Gorge');
 
         $n = 0;
-        while ($n < $number_of_games ) {
+        while ($n < $number_of_games) {
             $winner = (new Game($mike, $gorge, $rules))->play();
             $score->addScore($winner);
             $n++;
@@ -60,12 +59,11 @@ class GameCommand extends Command
     private function getNumberOfGames(InputInterface $input, OutputInterface $output)
     {
         $number_of_games = (int)$input->getOption('number-games');
-        if ( $number_of_games < 1 || $number_of_games > 1000 ) {
+        if ($number_of_games < 1 || $number_of_games > 1000) {
             $output->writeln("Number of games must be from 1 to 1000");
             return false;
         }
 
         return $number_of_games;
     }
-
 }

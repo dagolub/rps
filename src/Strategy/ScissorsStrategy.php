@@ -1,6 +1,7 @@
 <?php
 declare(strict_types=1);
 namespace App\Strategy;
+
 use App\Rules\RulesSimple;
 
 class ScissorsStrategy implements StrategyInterface

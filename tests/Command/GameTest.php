@@ -22,7 +22,7 @@ class GameTest extends TestCase
 
         $n = 0;
         $numberOfGames = 10;
-        while ($n < $numberOfGames ) {
+        while ($n < $numberOfGames) {
             $winner = (new Game($mike, $gorge, $rules))->play();
             $score->addScore($winner);
             $n++;
@@ -40,7 +40,7 @@ class GameTest extends TestCase
 
         $n = 0;
         $numberOfGames = 10;
-        while ($n < $numberOfGames ) {
+        while ($n < $numberOfGames) {
             $winner = (new Game($mike, $gorge, $rules))->play();
             $score->addScore($winner);
             $n++;
@@ -58,7 +58,7 @@ class GameTest extends TestCase
 
         $n = 0;
         $numberOfGames = 10;
-        while ($n < $numberOfGames ) {
+        while ($n < $numberOfGames) {
             $winner = (new Game($mike, $gorge, $rules))->play();
             $score->addScore($winner);
             $n++;
@@ -76,7 +76,7 @@ class GameTest extends TestCase
 
         $n = 0;
         $numberOfGames = 10;
-        while ($n < $numberOfGames ) {
+        while ($n < $numberOfGames) {
             $winner = (new Game($mike, $gorge, $rules))->play();
             $score->addScore($winner);
             $n++;

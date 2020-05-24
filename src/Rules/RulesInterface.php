@@ -8,5 +8,4 @@ interface RulesInterface
     public function getChoices(): array;
 
     public function isTheFirstWinner(string $one_result, string $two_result): bool;
-
 }
