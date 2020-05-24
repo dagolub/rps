@@ -2,6 +2,9 @@
 
 use App\Game;
 use App\Player;
+use App\Rules\RulesSimple;
+use App\Rules\RulesComplex;
+use App\Score;
 use PHPUnit\Framework\TestCase;
 use App\Strategy\RandomStrategy;
 use App\Strategy\RockStrategy;
@@ -12,42 +15,73 @@ class GameTest extends TestCase
 {
     public function testDefaultGameExecute()
     {
-        $strategy = new RandomStrategy();
+        $score = new Score();
+        $rules = new RulesSimple();
+        $mike = (new Player(new RandomStrategy()))->setName('Mike');
+        $gorge = (new Player(new PaperStrategy()))->setName('Gorge');
 
-        $one = (new Player($strategy))->setName('Mike');
-        $two = (new Player($strategy))->setName('Gorge');
-
+        $n = 0;
         $numberOfGames = 10;
-        $game = (new Game($one, $two))->play($numberOfGames);
+        while ($n < $numberOfGames ) {
+            $winner = (new Game($mike, $gorge, $rules))->play();
+            $score->addScore($winner);
+            $n++;
+        }
 
-        $this->assertEquals($numberOfGames, array_sum($game->getScore()));
+        $this->assertEquals($numberOfGames, array_sum($score->getRawScore()));
     }
 
     public function testAllDrawGameTestExecute()
     {
-        $strategy = new RockStrategy();
+        $score = new Score();
+        $rules = new RulesSimple();
+        $mike = (new Player(new RockStrategy()))->setName('Mike');
+        $gorge = (new Player(new RockStrategy()))->setName('Gorge');
 
-        $one = (new Player($strategy))->setName('Mike');
-        $two = (new Player($strategy))->setName('Gorge');
-
+        $n = 0;
         $numberOfGames = 10;
-        $game = (new Game($one, $two))->play($numberOfGames);
+        while ($n < $numberOfGames ) {
+            $winner = (new Game($mike, $gorge, $rules))->play();
+            $score->addScore($winner);
+            $n++;
+        }
 
-        $this->assertEquals($numberOfGames, $game->getScore()['draw']);
+        $this->assertEquals($numberOfGames, $score->getRawScore()[3]);
     }
 
     public function testMikeWinnerGameExecute()
     {
-        $rockStrategy = new RockStrategy();
+        $score = new Score();
+        $rules = new RulesSimple();
+        $mike = (new Player(new RockStrategy()))->setName('Mike');
+        $gorge = (new Player(new ScissorsStrategy()))->setName('Gorge');
 
-        $scissorsStrategy = new ScissorsStrategy();
-
-        $one = (new Player($rockStrategy))->setName('Mike');
-        $two = (new Player($scissorsStrategy))->setName('Gorge');
-
+        $n = 0;
         $numberOfGames = 10;
-        $game = (new Game($one, $two))->play($numberOfGames);
+        while ($n < $numberOfGames ) {
+            $winner = (new Game($mike, $gorge, $rules))->play();
+            $score->addScore($winner);
+            $n++;
+        }
 
-        $this->assertEquals($numberOfGames, $game->getScore()['Mike']);
+        $this->assertEquals($numberOfGames, $score->getRawScore()[1]);
+    }
+
+    public function testComplexGameExecute()
+    {
+        $score = new Score();
+        $rules = new RulesComplex();
+        $mike = (new Player(new RandomStrategy()))->setName('Mike');
+        $gorge = (new Player(new RandomStrategy()))->setName('Gorge');
+
+        $n = 0;
+        $numberOfGames = 10;
+        while ($n < $numberOfGames ) {
+            $winner = (new Game($mike, $gorge, $rules))->play();
+            $score->addScore($winner);
+            $n++;
+        }
+
+        $this->assertEquals($numberOfGames, array_sum($score->getRawScore()));
     }
 }

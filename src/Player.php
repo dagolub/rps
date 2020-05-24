@@ -7,11 +7,11 @@ use App\Strategy\StrategyInterface;
 class Player
 {
     private string $name;
-    private StrategyInterface $randomizer;
+    private StrategyInterface $strategy;
 
-    public function __construct(StrategyInterface $randomizer)
+    public function __construct(StrategyInterface $strategy)
     {
-        $this->randomizer = $randomizer;
+        $this->strategy = $strategy;
         $this->name = "no name";
     }
 
@@ -28,7 +28,7 @@ class Player
 
     public function makeChoice($choices):string
     {
-        $random_index = $this->randomizer->getRandomNumber(count($choices)-1);
+        $random_index = $this->strategy->getRandomNumber(count($choices)-1);
         return $choices[$random_index];
     }
 }

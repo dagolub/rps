@@ -4,12 +4,14 @@ namespace App\Command;
 
 use App\Game;
 use App\Player;
+use App\Rules\RulesSimple;
 use App\Strategy\RandomStrategy;
 use App\Strategy\PaperStrategy;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use App\Score;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -37,12 +39,20 @@ class GameCommand extends Command
             return 0;
         }
 
+        $score = new Score();
+        $rules = new RulesSimple();
         $mike = (new Player(new RandomStrategy()))->setName('Mike');
         $gorge = (new Player(new PaperStrategy()))->setName('Gorge');
-        $game = (new Game($mike, $gorge))
-            ->play($number_of_games);
 
-        $this->printScore($game->getScore(), $input, $output);
+        $n = 0;
+        while ($n < $number_of_games ) {
+            $winner = (new Game($mike, $gorge, $rules))->play();
+            $score->addScore($winner);
+            $n++;
+        }
+
+        $io = new SymfonyStyle($input, $output);
+        call_user_func_array([$io,'definitionList'], $score->getScore($mike->getName(), $gorge->getName()));
 
         return 0;
     }
@@ -57,12 +67,5 @@ class GameCommand extends Command
 
         return $number_of_games;
     }
-    private function printScore($score, $input, $output)
-    {
-        $io = new SymfonyStyle($input, $output);
-        $dataToPrint = array_map(function ($k, $v) {
-            return [$k=>$v];
-        }, array_keys($score), $score);
-        call_user_func_array([$io,'definitionList'], $dataToPrint);
-    }
+
 }
