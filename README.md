@@ -1,3 +1,6 @@
+### About
+An automatic game where one player choice paper and another make a random choice
+
 #### How to play
 ```bash
 docker pull dagolub/rps
