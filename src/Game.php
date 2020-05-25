@@ -22,12 +22,13 @@ class Game
         $one_result = $this->one->makeChoice($this->rules->getChoices());
         $two_result = $this->two->makeChoice($this->rules->getChoices());
 
+        $result = 2;
         if ($this->rules->isTheFirstWinner($one_result, $two_result)) {
-            return 1;
+            $result = 1;
         } elseif ($one_result === $two_result) {
-            return 3;
-        } else {
-            return 2;
+            $result = 3;
         }
+
+        return $result;
     }
 }
