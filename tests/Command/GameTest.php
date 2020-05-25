@@ -10,6 +10,7 @@ use App\Strategy\RandomStrategy;
 use App\Strategy\RockStrategy;
 use App\Strategy\PaperStrategy;
 use App\Strategy\ScissorsStrategy;
+use App\Strategy\WellStrategy;
 
 class GameTest extends TestCase
 {
@@ -83,5 +84,23 @@ class GameTest extends TestCase
         }
 
         $this->assertEquals($numberOfGames, array_sum($score->getRawScore()));
+    }
+
+    public function testComplexGameWithWellExecute()
+    {
+        $score = new Score();
+        $rules = new RulesComplex();
+        $mike = (new Player(new WellStrategy()))->setName('Mike');
+        $gorge = (new Player(new RandomStrategy()))->setName('Gorge');
+
+        $n = 0;
+        $numberOfGames = 100;
+        while ($n < $numberOfGames) {
+            $winner = (new Game($mike, $gorge, $rules))->play();
+            $score->addScore($winner);
+            $n++;
+        }
+
+        $this->assertGreaterThan(round($numberOfGames*0.33), $score->getRawScore()[1]);
     }
 }

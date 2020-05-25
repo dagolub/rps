@@ -26,6 +26,8 @@ class RulesComplex implements RulesInterface
             $one_result === 'scissors' && $two_result === 'paper' ||
             $one_result === 'rock' && $two_result === 'scissors' ||
             $one_result === 'rock' && $two_result === 'paper' ||
+            $one_result === 'well' && $two_result === 'rock' ||
+            $one_result === 'well' && $two_result === 'scissors' ||
             $one_result === 'paper' && $two_result === 'well'
         ) {
             return true;
